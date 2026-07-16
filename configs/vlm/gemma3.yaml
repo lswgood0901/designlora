@@ -1,0 +1,9 @@
+vlm_kwargs:
+  min_vram_gb: 12.1
+  vlm_id: google/gemma-3-4b-it
+  vlm_cls: Gemma3ForConditionalGeneration
+  load_in_4bit: False
+  torch_dtype: torch.bfloat16
+vlm_template:
+  image_token: "<start_of_image>"
+  prefix: "<bos><start_of_turn>user\nYou are a helpful assistant.\n\n{image_token}{question}<end_of_turn>\n<start_of_turn>model\n"

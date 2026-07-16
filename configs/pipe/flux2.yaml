@@ -1,0 +1,33 @@
+# FLUX.2 [dev] generator (Appendix B in the paper).
+pipe_kwargs:
+  min_vram_gb: 65.0
+  # Local weights dir; override with DESIGNLORA_MODELS_DIR. HF id: black-forest-labs/FLUX.2-dev
+  pipe_id: "${oc.env:DESIGNLORA_MODELS_DIR,/data1/models}/flux2dev"
+  pipe_cls: Flux2Pipeline          # requires diffusers >= 0.36
+  torch_dtype: torch.bfloat16
+  scheduler_config:
+    train_scheduler_cls: FlowMatchEulerDiscreteScheduler
+generator_kwargs:
+  height: 384
+  width: 384
+  num_inference_steps: 28
+  guidance_scale: 4.0
+lora_kwargs:
+  # 13 attention/feed-forward projections, matching the paper's Appendix B.
+  target_modules:
+    - attn.to_q
+    - attn.to_k
+    - attn.to_v
+    - attn.add_q_proj
+    - attn.add_k_proj
+    - attn.add_v_proj
+    - attn.to_add_out
+    - attn.to_out.0
+    - attn.to_qkv_mlp_proj
+    - ff.linear_in
+    - ff.linear_out
+    - ff_context.linear_in
+    - ff_context.linear_out
+  r: 16
+  lora_dropout: 0.0
+  lora_lr: 9e-5

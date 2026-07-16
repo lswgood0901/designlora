@@ -1,0 +1,22 @@
+pipe_kwargs:
+  min_vram_gb: 15.0
+  pipe_id: Efficient-Large-Model/Sana_1600M_512px_diffusers
+  pipe_cls: SanaPipeline
+  torch_dtype: torch.bfloat16
+  scheduler_config:
+    train_scheduler_cls: FlowMatchEulerDiscreteScheduler
+generator_kwargs:
+  height: 384
+  width: 384
+  num_inference_steps: 20
+  guidance_scale: 4.5
+lora_kwargs:
+  lora_lr: 5e-6
+  target_modules:
+    - to_k
+    - to_q
+    - to_v
+    - to_out.0
+    - ff.conv_inverted
+    - ff.conv_depth
+    - ff.conv_point

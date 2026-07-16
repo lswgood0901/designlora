@@ -1,0 +1,24 @@
+# pip equivalent of environment.yaml (paper's FLUX.1-schnell + Idefics2 system + server).
+# For FLUX.2 [dev]/[klein] or recent GPUs, see README.md > "Models".
+torch==2.7.0
+torchvision==0.22.0
+transformers==4.50.0
+diffusers==0.32.2
+peft==0.14.0
+accelerate==1.0.1
+bitsandbytes==0.45.2
+safetensors==0.4.5
+git+https://github.com/davidbau/baukit
+fastapi==0.115.6
+uvicorn==0.34.0
+pydantic==2.10.6
+omegaconf==2.3.0
+numpy==1.24.3
+scipy==1.15.2
+matplotlib==3.9.4
+Pillow==10.4.0
+tqdm==4.67.1
+sentencepiece==0.2.0
+protobuf==5.29.3
+ipython==8.37.0
+openai==1.62.0

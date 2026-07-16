@@ -1,0 +1,27 @@
+pipe_kwargs:
+  min_vram_gb: 44.3
+  # Local weights dir; override with DESIGNLORA_MODELS_DIR. HF id: black-forest-labs/FLUX.1-dev
+  pipe_id: "${oc.env:DESIGNLORA_MODELS_DIR,/data1/models}/FLUX.1-dev"
+  pipe_cls: FluxPipeline
+  torch_dtype: torch.bfloat16
+  scheduler_config:
+    train_scheduler_cls: FlowMatchEulerDiscreteScheduler
+generator_kwargs:
+  height: 384
+  width: 384
+  num_inference_steps: 28 #28
+  guidance_scale: 0
+lora_kwargs:
+  target_modules:
+    - attn.to_k
+    - attn.to_q
+    - attn.to_v
+    - attn.to_out.0
+    - attn.add_k_proj
+    - attn.add_q_proj
+    - attn.add_v_proj
+    - attn.to_add_out
+    - ff.net.0.proj
+    - ff.net.2
+    - ff_context.net.0.proj
+    - ff_context.net.2

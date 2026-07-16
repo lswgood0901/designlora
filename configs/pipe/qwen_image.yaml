@@ -1,0 +1,33 @@
+pipe_kwargs:
+  min_vram_gb: 65.2
+  pipe_id: "${oc.env:DESIGNLORA_MODELS_DIR,/data1/models}/Qwen-Image"
+  pipe_cls: DiffusionPipeline
+  torch_dtype: torch.bfloat16
+  trust_remote_code: true
+  scheduler_config:
+    train_scheduler_cls: FlowMatchEulerDiscreteScheduler
+    num_train_timesteps: 1000
+generator_kwargs:
+  height: 384
+  width: 384
+  num_inference_steps: 28
+  guidance_scale: 3.0
+lora_kwargs:
+  target_modules:
+    # Attention
+    - to_q
+    - to_k
+    - to_v
+    - to_out.0
+    - add_q_proj
+    - add_k_proj
+    - add_v_proj
+    - to_add_out
+    # MLP
+    - img_mlp.net.0.proj
+    - img_mlp.net.2
+    - txt_mlp.net.0.proj
+    - txt_mlp.net.2
+  r: 16
+  lora_dropout: 0.0
+  lora_lr: 9e-5

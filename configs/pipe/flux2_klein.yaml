@@ -1,0 +1,36 @@
+# FLUX.2 [klein] 9B generator — the open-weight, step-distilled FLUX.2 model.
+# Same transformer architecture as FLUX.2 [dev] (Flux2Transformer2DModel), so the
+# LoRA target modules are identical; distilled to 4 steps with guidance ~1.0.
+pipe_kwargs:
+  min_vram_gb: 29.0
+  # Local weights dir; override with DESIGNLORA_MODELS_DIR. HF id: black-forest-labs/FLUX.2-klein-9B
+  pipe_id: "${oc.env:DESIGNLORA_MODELS_DIR,/data1/models}/FLUX.2-klein-9B"
+  pipe_cls: Flux2KleinPipeline     # requires diffusers >= 0.37
+  torch_dtype: torch.bfloat16
+  scheduler_config:
+    train_scheduler_cls: FlowMatchEulerDiscreteScheduler
+generator_kwargs:
+  height: 384
+  width: 384
+  num_inference_steps: 4           # step-distilled
+  guidance_scale: 1.0
+lora_kwargs:
+  # 13 attention/feed-forward projections, matching the paper's Appendix B (verified
+  # against the FLUX.2 [klein] 9B transformer weight names).
+  target_modules:
+    - attn.to_q
+    - attn.to_k
+    - attn.to_v
+    - attn.add_q_proj
+    - attn.add_k_proj
+    - attn.add_v_proj
+    - attn.to_add_out
+    - attn.to_out.0
+    - attn.to_qkv_mlp_proj
+    - ff.linear_in
+    - ff.linear_out
+    - ff_context.linear_in
+    - ff_context.linear_out
+  r: 16
+  lora_dropout: 0.0
+  lora_lr: 9e-5

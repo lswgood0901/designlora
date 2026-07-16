@@ -1,0 +1,8 @@
+save_folder: runs/gradio
+question_postfix: "Answer with Yes or No."
+eval_interactive: 5
+vanilla_kwargs:
+  max_new_tokens: -1
+  grid_size: [5, 2]
+  eval_seed: 0
+  eval_weight: 0

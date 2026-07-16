@@ -1,0 +1,10 @@
+vlm_kwargs:
+  min_vram_gb: 19.6
+  # Local weights dir; override with DESIGNLORA_MODELS_DIR. HF id: Qwen/Qwen2.5-VL-7B-Instruct
+  vlm_id: "${oc.env:DESIGNLORA_MODELS_DIR,/data1/models}/Qwen2.5-VL-7B-Instruct"
+  vlm_cls: AutoModelForVision2Seq
+  load_in_4bit: False
+  torch_dtype: torch.bfloat16
+vlm_template:
+  image_token: "<|vision_start|><|image_pad|><|vision_end|>"
+  prefix: "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\n{image_token}{question}<|im_end|>\n<|im_start|>assistant\n"

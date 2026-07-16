@@ -1,0 +1,34 @@
+pipe_kwargs:
+  pipe_devices: [0]
+  pipe_cls: FluxPipeline
+  torch_dtype: torch.bfloat16
+  gpu_ram_limit: 96
+vlm_kwargs:
+  vlm_device: cuda:0
+use_multi_image_vlm: True
+opt_kwargs:
+  save_weights: True
+  opt_cls: torch.optim.AdamW
+  num_opt_steps: 100
+  eval_every_n: ${opt_kwargs.num_opt_steps}
+  train_n: ${opt_kwargs.num_opt_steps}
+  train_seed: 100
+  train_weight: 4
+  optimizer_kwargs:
+    weight_decay: 0
+eval_kwargs:
+  low_memory: True
+  eval_seed: 0
+  eval_weights:
+    - 0
+    - ${opt_kwargs.train_weight}
+  eval_n: 5
+  use_llm_surrogate: True
+train_generator_kwargs:
+  num_inference_steps: 8
+  # height, width, guidance_scale은 generator_kwargs에서 상속
+lora_kwargs:
+  r: 16
+  lora_lr: 8e-6
+  init_lora_weights: gaussian
+  lora_dropout: 0.0

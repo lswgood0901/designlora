@@ -1,0 +1,9 @@
+vlm_kwargs:
+  min_vram_gb: 34.7
+  vlm_id: mistral-community/pixtral-12b
+  vlm_cls: AutoModelForVision2Seq
+  load_in_4bit: False
+  torch_dtype: torch.bfloat16
+vlm_template:
+  image_token: "[IMG]"
+  prefix: "<s>[INST]{image_token}{question}[/INST]"
